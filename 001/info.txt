@@ -1,0 +1,66 @@
+C: Gradually learn multiple technologies and combine them in a stress test v001
+(please correct let me know if concepts are wrongly used or can be improved)
+
+Concepts:
+- Ubuntu Server
+- Vim - practice Vim
+- Git - practice git
+
+
+1. Setup an empty Ubuntu Server (14.04.3) on any hypervisor:
+------------------------------------------------------------
+- UTC as Timezone
+- Select OpenSSH server on Software Selection
+
+2. Prepare Ubuntu Server as development and demo environment:
+-------------------------------------------------------------
+
+## first upgrade to latest packages
+$ sudo apt-get update && sudo apt-get upgrade
+
+## install some useful packages, personal preference, if not installed yet ... to be discussed
+$ sudo apt-get install curl git vim ssh
+$ sudo apt-get install htop sysstat nethogs slurm smem
+
+## sudo without password (on development just to avoid pulling hair out of frustration)
+$ sudo vim /etc/sudoers.d/moresudoers      #can be any name you want
+myusername ALL=(ALL) NOPASSWD:ALL
+
+## install my own vimrc to feel home
+$ cd /tmp; git clone https://github.com/aldwinaldwin/vimrc
+$ cd vimrc; ./install.sh
+$ cd ..; rm -rf vimrc
+# repeat the same as root, cause I prefer to work as root sometimes although it's not adviced in production environment
+
+todo v002: add datadisk to system, if restarting with clean system disk, datadisk can be reused
+
+---------------------------------------------------
+** Sorry, from now on, working as root user mostly.
+** Some say, it's really bad habit so:
+** You can use all commands with sudo if you want
+---------------------------------------------------
+
+## create data directory and working directories
+$ mkdir -p /data; cd /data
+
+
+3. Practic git
+--------------
+$ mkdir /data/git; cd /data/git
+
+## create account on github.com if you don't have one yet and setup your environment
+$ git config --global user.name "myusername"
+$ git config --global user.email "myusername@users.noreply.github.com"
+
+## create new git and push to github.com
+$ git init
+$ git commit --allow-empty -m 'Initial commit'
+$ git remote add origin https://github.com/myusername/pocproject
+#create your new repository via github.com
+$ git push -u origin master --force
+
+$ mkdir 001
+$ vim 001/info.txt   #past this info
+$ git add 001/info.txt
+
+
