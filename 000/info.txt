@@ -1,0 +1,54 @@
+POC: learn multiple technologies and combine them in a stress test
+
+Stress Test (outside of the docker server):
+- In any language : python or java or c++ or ...
+- Send + Request data from Webservices
+- Variable : frequenty + size + amount of requests
+
+Docker server:
+- Create an script for each docker instance type, so you can reuse each item in any other docker-project
+- Config files and data files on data-disk for the instances
+- Extra : should be able to start more than 2 NodeJS/Python instances for High Availability
+
+Nginx :
+- Receives requests as webserver
+- Distributes over variable amount of nodejs instances
+- Extra : SSL secured
+
+NodeJS :
+- Receiving data type A and B : convert + RPUSH on Redis
+- Receiving data type C : insert in mongo
+- Receiving request type D : Get data from mysql
+- Receiving request type E : Get data from mongo
+
+Redis :
+- Redis server
+
+Python :
+- BLPOP from Redis : data type A to Mysql, data type B to Mongo
+(Instead of python, you can use Java or C)
+
+Mysql :
+- Mysql server
+
+Mongo :
+- Mongo server
+
+Apache/Graphite/Collectd :
+- Monitoring system ... collect relevant data from each part of the system
+- Extra : save in mongo
+- Extra extra : save via Redis to mongo
+
+Python 2 :
+- Save data from collectd to mongo
+
+POC extra :  centos and ubuntu versions of each instance
+POC extra :  use coreos as docker server
+POC extra :  create a coreos cluster to distribute docker instances
+POC extra :  how well works snappy as docker server?
+POC extra :  postgresql instance
+POC extra :  integrate puppet or chef or ansible
+POC extra :  Zabbix monitoring
+POC extra :  hadoop server
+...
+
