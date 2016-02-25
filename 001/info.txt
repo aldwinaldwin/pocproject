@@ -59,8 +59,22 @@ $ git remote add origin https://github.com/myusername/pocproject
 #create your new repository via github.com
 $ git push -u origin master --force
 
+## add file and push to github.com
 $ mkdir 001
 $ vim 001/info.txt   #past this info
 $ git add 001/info.txt
+$ git commit -m "added 001/info.txt"
+$ git push -u origin master   #push to github.com
+
+## git info
+$ git status
+$ git diff
+$ git log --graph --decorate --all
+$ git log -p
+$ git branch
+$ git branch -r  #remote
+$ git branch -a  #= git branch + git branch -r
+$ git reflog
+
 
 
