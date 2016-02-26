@@ -1,5 +1,7 @@
-C: Gradually learn multiple technologies and combine them in a stress test v001
-(please correct let me know if concepts are wrongly used or can be improved)
+POC: Gradually learn multiple technologies and combine them in a stress test v001
+
+Please, correct, let me know if concepts are wrongly used or can be improved.
+For learning, execute step by step, and test constantly. There might be issues. Check /var/log/... whenever you encounter a problem.
 
 Concepts:
 - Ubuntu Server
@@ -9,7 +11,8 @@ Concepts:
 - Graphite
 - Apache2
 - Redis
-
+- Python
+- Mongo
 
 1. Setup an empty Ubuntu Server (14.04.3) on any hypervisor:
 ------------------------------------------------------------
@@ -215,4 +218,11 @@ $ mongo
 > db.testCollection.find().pretty()
 > db.testCollection.drop()
 
+8. Python : mongo stress test
+-----------------------------
+
+$ pip install pymongo
+
+# insert 100.000 records
+$ python ./001/scripts/mongoInsert.py
 
