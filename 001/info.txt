@@ -13,6 +13,7 @@ Concepts:
 - Redis
 - Python
 - Mongo
+- MySQL
 
 1. Setup an empty Ubuntu Server (14.04.3) on any hypervisor:
 ------------------------------------------------------------
@@ -253,6 +254,24 @@ $ mysql -uroot -p   #mypasswd
 > use testdb;
 > select count(*) from testing;
 > drop table testing;
+
+11. Python : redis - python - mysql - mongo
+-------------------------------------------
+
+#open 3 terminals
+terminal1 $ python ./001/scripts/test1_1.py  #listen to redis queue logQueue and put all that arrives in mongo
+terminal2 $ python ./001/scripts/test1_2.py  #listen to redis queue logInfoQueue and put all that arrives in mysql
+terminal3 $ python ./001/scripts/test1_3.py  #go through /var/log, send all info from .log files to logQueue and report to logInfoQueue
+
+$ mysql -uroot -p testdb
+> show tables;
+> select * from logInfo;
+
+$ mongo test
+> show collections
+> db.logs.find()
+
+$ ./001/scripts/cleanDbs.sh mypasswd     #clean all the data collected
 
 
 

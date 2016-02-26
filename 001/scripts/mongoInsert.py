@@ -4,7 +4,7 @@ import datetime
 from pymongo import MongoClient
 connection = MongoClient("mongodb://localhost", w=0)
 
-db=connection.shardTest
+db=connection.test
 test = db.test
 
 tstart = datetime.datetime.now()
