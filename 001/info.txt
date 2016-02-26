@@ -5,6 +5,10 @@ Concepts:
 - Ubuntu Server
 - Vim - practice Vim
 - Git - practice git
+- Collectd
+- Graphite
+- Apache2
+- Redis
 
 
 1. Setup an empty Ubuntu Server (14.04.3) on any hypervisor:
@@ -113,6 +117,7 @@ $ service apache2 restart
 
 home$ ssh poc@pocserver -L 8001:127.0.0.1:8001    #Browser http://localhost:8001
 #Or   http://pocserver:8001
+#login: root  mypasswd
 
 => No Joy !!!
 $ apt-get install graphite-carbon
@@ -120,3 +125,51 @@ $ service apache2 restart
 => Joy !!!
 $ apt-get purge graphite-carbon
 => Still Joy ???  why?
+---Debug: try install python-twisted-core next time -------------
+Processing triggers for python-twisted-core (13.2.0-1ubuntu1) ...
+Processing triggers for ureadahead (0.100.0-16) ...
+Processing triggers for man-db (2.6.7.1-1ubuntu1) ...
+Setting up graphite-carbon (0.9.12-3) ...
+carbon-cache disabled in /etc/default/graphite-carbon
+Processing triggers for python-twisted-core (13.2.0-1ubuntu1) ...
+Processing triggers for ureadahead (0.100.0-16) ...
+-----------------------------------------------------------------
+
+5. Redis : queue and key/value store
+------------------------------------
+
+# Install and test
+$ apt-get install redis-server
+$ redis-benchmark -q -n 1000 -c 10 -P 5    #benchmark/test
+
+# Configure
+$ vim /etc/redis/redis.conf
+tcp-keepalive 60                        #A reasonable value for this option is 60 seconds.
+#bind 127.0.0.1                         #Make accessible to anyone
+maxmemory-policy noeviction             #return errors when the memory limit was reached
+appendonly yes                          #a little more persisten, save to disk
+$ sudo service redis-server restart
+
+# Test some commands : http://redis.io/commands
+$ redis-cli
+* Queue
+LPUSH queue1 "hello world"  #or RPUSH
+LLEN queue1
+RPOP queue1                 #or BRPOP (listen until something in the queue) or LPOP or BLPOP
+* Key/Value Cache
+SET foo bar
+GET foo
+KEYS *                      # see all keys
+* 16 databases
+SELECT 1                    # 0-15
+* Client
+CLIENT SETNAME myuser
+CLIENT GETNAME
+* Admin
+CLIENT LIST
+DBSIZE                      #  amount of keys
+CONFIG GET *
+INFO
+LASTSAVE                    # last save to disk
+
+

@@ -2,4 +2,5 @@
 - all config files adjusted, to git
 - use README.md format
 - solve the graphite-carbon mystery?
+- redis master-slave  https://www.digitalocean.com/community/tutorials/how-to-configure-a-redis-cluster-on-ubuntu-14-04
 
