@@ -225,4 +225,36 @@ $ pip install pymongo
 
 # insert 100.000 records
 $ python ./001/scripts/mongoInsert.py
+$ mongo
+> show dbs
+> use shardTest
+> show collections
+> db.test.drop()      #drop test collections
+
+9. Mysql
+--------
+
+# install
+$ apt-get install mysql-server   #mypasswd
+
+# test some commands
+$ mysql -uroot -p   #mypasswd
+> show databases;
+
+
+10. Python : mysql stress test
+------------------------------
+
+$ apt-get install python-dev libmysqlclient-dev
+$ pip install MySQL-python
+
+$ python ./001/scripts/mysqlInsert.py
+$ mysql -uroot -p   #mypasswd
+> use testdb;
+> select count(*) from testing;
+> drop table testing;
+
+
+
+
 
