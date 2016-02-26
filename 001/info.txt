@@ -82,6 +82,7 @@ $ git branch
 $ git branch -r  #remote
 $ git branch -a  #= git branch + git branch -r
 $ git reflog
+$ git ls-files . --exclude-standard --others     #see files that aren't added yet
 
 
 4. Server usage info via collectd+graphite+apache
@@ -190,7 +191,28 @@ LLEN  testQueue
 # Use graphite to see cpu/mem usage
 # Test : Run redisLPUSH as many time till the memory is full (127.0.0.1:6379> INFO)
 
+7. Mongo
+--------
 
+## Install: https://docs.mongodb.org/manual/tutorial/install-mongodb-on-ubuntu/
+$ apt-key adv --keyserver hkp://keyserver.ubuntu.com:80 --recv EA312927
+$ echo "deb http://repo.mongodb.org/apt/ubuntu trusty/mongodb-org/3.2 multiverse" | sudo tee /etc/apt/sources.list.d/mongodb-org-3.2.list
+$ apt-get update
+$ sudo apt-get install -y mongodb-org
 
+## Keep this version when running upgrade:
+$ echo "mongodb-org hold" | sudo dpkg --set-selections
+$ echo "mongodb-org-server hold" | sudo dpkg --set-selections
+$ echo "mongodb-org-shell hold" | sudo dpkg --set-selections
+$ echo "mongodb-org-mongos hold" | sudo dpkg --set-selections
+$ echo "mongodb-org-tools hold" | sudo dpkg --set-selections
+
+# Test some commands:
+$ mongo
+> for( var i = 0; i < 20000; i++ ) { db.testCollection.insert({x:i,y:"hi"}); }
+> show collections
+> db.testCollection.count()
+> db.testCollection.find().pretty()
+> db.testCollection.drop()
 
 
