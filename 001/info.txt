@@ -14,6 +14,8 @@ Concepts:
 
 2. Prepare Ubuntu Server as development and demo environment:
 -------------------------------------------------------------
+## add your server-ip with a name to your hosts file for easy use
+$ ssh poc@pocserver
 
 ## first upgrade to latest packages
 $ sudo apt-get update && sudo apt-get upgrade
@@ -44,8 +46,8 @@ todo v002: add datadisk to system, if restarting with clean system disk, datadis
 $ mkdir -p /data; cd /data
 
 
-3. Practic git
---------------
+3. Practice git
+---------------
 $ mkdir /data/git; cd /data/git
 
 ## create account on github.com if you don't have one yet and setup your environment
@@ -77,4 +79,44 @@ $ git branch -a  #= git branch + git branch -r
 $ git reflog
 
 
+4. Server usage info via collectd+graphite+apache
+-------------------------------------------------
+$ apt-get install collectd
+$ apt-get install apache2 libapache2-mod-wsgi
+$ apt-get install graphite-web
+$ apt-get install python-rrdtool
 
+$ cd /etc/apache2/sites-available/
+$ ln -s /usr/share/graphite-web/apache2-graphite.conf
+$ vim apache2-graphite.conf   #port 8001
+$ vim ../ports.conf    #port 8001
+$ a2dissite 000-default
+$ a2ensite apache2-graphite
+
+$ cd /usr/lib/python2.7/dist-packages/graphite/
+$ python manage.py syncdb   #root:mypasswd
+$ cd /var/lib/graphite
+$ chown www-data:www-data graphite.db
+$ chmod 666 graphite.db
+
+$ cd /etc/graphite
+$ vim local_settings.py
+#STORAGE_DIR
+#WHISPER_DIR
+RRD_DIR = '/var/lib/collectd/rrd'   #!! different directory
+DATA_DIRS = [RRD_DIR]
+TIME_ZONE = 'Etc/UCT'   #servers like utc
+$ vim /etc/collectd/collectd.conf
+Hostname "poc"
+$ service collectd start
+$ service apache2 restart
+
+home$ ssh poc@pocserver -L 8001:127.0.0.1:8001    #Browser http://localhost:8001
+#Or   http://pocserver:8001
+
+=> No Joy !!!
+$ apt-get install graphite-carbon
+$ service apache2 restart
+=> Joy !!!
+$ apt-get purge graphite-carbon
+=> Still Joy ???  why?
