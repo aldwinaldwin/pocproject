@@ -291,4 +291,18 @@ $ curl http://localhost:3000/       #should return Hello World!
 $ rm -rf 001/scripts/node_modules   #no need to save npm modules after testing
 
 
+13. Python : python - nodejs - redis - python - mysql/mongodb
+-------------------------------------------------------------
+
+$ cd 001/scripts/
+$ npm install express body-parser redis
+terminal1 $ nodejs test2_1.js               #webservice listening and placing on queues
+terminal2 $ python test1_1.js               #from previous test : listen queue and put in mysql
+terminal3 $ python test1_2.js               #from previous test : listen queue and put in mongo
+terminal4 $ python test2_2.js               #get /var/log info and send to nodejs webservices
+
+!!much slower than directly to redis queue!! because curl/http is much slower?
+
+
+
 
