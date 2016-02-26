@@ -274,6 +274,21 @@ $ mongo test
 $ ./001/scripts/cleanDbs.sh mypasswd     #clean all the data collected
 
 
+12. Node.js
+-----------
+
+## Install
+$ apt-get install nodejs npm
+
+## Example
+$ cd 001/scripts/
+$ npm install express               #install express module
+$ nodejs nodeJsExpress.js
+# from other terminal
+$ curl http://localhost:3000/       #should return Hello World!
+
+# cleanup
+$ rm -rf 001/scripts/node_modules   #no need to save npm modules after testing
 
 
 
