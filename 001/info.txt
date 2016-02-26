@@ -27,6 +27,7 @@ $ sudo apt-get update && sudo apt-get upgrade
 ## install some useful packages, personal preference, if not installed yet ... to be discussed
 $ sudo apt-get install curl git vim ssh
 $ sudo apt-get install htop sysstat nethogs slurm smem
+$ sudo apt-get install python-pip
 
 ## sudo without password (on development just to avoid pulling hair out of frustration)
 $ sudo vim /etc/sudoers.d/moresudoers      #can be any name you want
@@ -171,5 +172,25 @@ DBSIZE                      #  amount of keys
 CONFIG GET *
 INFO
 LASTSAVE                    # last save to disk
+
+6. Python : Redis stress test
+-----------------------------
+
+$ pip install redis
+
+# Push log info out of /var/log onto a queue :
+$ python ./001/scripts/redisLPUSH.py
+# Pop the info from the queue : $python ./001/scripts/redisBRPOP.py
+# You could start the pop script first in one terminal, and the run the push simultaniously
+# Test : Run the scripts from outside the server (adjust the ip address in the scripts) or from multiple servers
+# Test : Open up a terminal with redis-cli and use MONITOR command to see what happens
+# Test : Use command learned before to see queue size :
+KEYS *
+LLEN  testQueue
+# Use graphite to see cpu/mem usage
+# Test : Run redisLPUSH as many time till the memory is full (127.0.0.1:6379> INFO)
+
+
+
 
 
