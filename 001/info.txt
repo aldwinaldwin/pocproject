@@ -297,12 +297,33 @@ $ rm -rf 001/scripts/node_modules   #no need to save npm modules after testing
 $ cd 001/scripts/
 $ npm install express body-parser redis
 terminal1 $ nodejs test2_1.js               #webservice listening and placing on queues
-terminal2 $ python test1_1.js               #from previous test : listen queue and put in mysql
-terminal3 $ python test1_2.js               #from previous test : listen queue and put in mongo
-terminal4 $ python test2_2.js               #get /var/log info and send to nodejs webservices
+terminal2 $ python test1_1.py               #from previous test : listen queue and put in mysql
+terminal3 $ python test1_2.py               #from previous test : listen queue and put in mongo
+terminal4 $ python test2_2.py               #get /var/log info and send to nodejs webservices
 
 !!much slower than directly to redis queue!! because curl/http is much slower?
 
+#cleanup
+$ rm -rf 001/scripts/node_modules   #clean node_modules from test
+$ ./001/scripts/cleanDbs.sh mypasswd
 
+14. Python : python - python - redis - python - mysql/mongodb
+-------------------------------------------------------------
 
+# http://www.dreamsyssoft.com/python-scripting-tutorial/create-simple-rest-web-service-with-python.php
+$ easy_install web.py
+# test:
+terminal1 $ python 001/scripts/rest.py
+terminal2 $ curl http://localhost:8080/users
+terminal2 $ curl http://localhost:8080/users/2
+
+$ cd 001/scripts/
+terminal1 $ python test2_1.py 3000          #webservice listening on port 3000 and placing on queues
+terminal2 $ python test1_1.py               #from previous test : listen queue and put in mysql
+terminal3 $ python test1_2.py               #from previous test : listen queue and put in mongo
+terminal4 $ python test2_2.py               #get /var/log info and send to nodejs webservices
+
+!!much faster than nodejs version!! threading in nodejs?
+#cleanup
+$ ./001/scripts/cleanDbs.sh mypasswd
 
