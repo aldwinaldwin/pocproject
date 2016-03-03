@@ -19,6 +19,8 @@ Concepts:
 - NodeJS (Express)
 - Nginx
 
+The whole poc setup happens here on 1 single server. But in theory, each piece can be placed on different machine. Divide and conquer.
+
 1. Setup an empty Ubuntu Server (14.04.3) on any hypervisor:
 ------------------------------------------------------------
 - UTC as Timezone
