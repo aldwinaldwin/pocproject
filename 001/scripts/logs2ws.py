@@ -5,6 +5,7 @@ from datetime import datetime
 import json
 
 for dirpath, dirnames, files in os.walk('/var/log/'):
+  if not dirpath=="/var/log/nginx":
     print 'treating path: '+dirpath
     for filename in files:
         if filename.endswith('.log'):

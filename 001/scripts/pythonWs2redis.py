@@ -8,8 +8,6 @@ urls = (
     '/pushonqueue', 'pushonqueue'
 )
 
-print globals()
-
 app = web.application(urls, globals())
 
 class pushonqueue:

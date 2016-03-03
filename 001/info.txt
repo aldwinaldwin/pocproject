@@ -13,10 +13,11 @@ Concepts:
 - Graphite
 - Apache2
 - Redis (Queue, Key/Value store)
-- Python (Rest WS)
+- Python (Redis, Mongo, Mysql, Rest WS)
 - Mongo
 - MySQL
 - NodeJS (Express)
+- Nginx
 
 1. Setup an empty Ubuntu Server (14.04.3) on any hypervisor:
 ------------------------------------------------------------
@@ -329,4 +330,34 @@ terminal4 $ python logs2ws.py                   #get /var/log info and send to n
 !!much faster than nodejs version!! threading in nodejs?
 #cleanup
 $ ./001/scripts/cleanDbs.sh mypasswd            #provide mysql password as parameter
+
+15. Nginx
+-------------------------
+
+$ apt-get install nginx
+
+#test:
+browser: http://pocserver                       #Welcome to nginx!
+
+16. Python : python - nginx - python - redis - python - mysql/mongodb
+---------------------------------------------------------------------
+
+$ vim /etc/nginx/sites-available/lb_logs        #see ./001/scripts/lb_logs
+$ ln -s /etc/nginx/sites-available/lb_logs /etc/nginx/sites-enabled/lb_logs
+$ service nginx restart
+$ netstat -nap | grep 3000                      #check if port 3000 is listening
+terminal1$ python 001/scripts/pythonWs2redis.py 3001
+terminal2$ python 001/scripts/pythonWs2redis.py 3002
+terminal3$ python 001/scripts/redis2mongo.py
+terminal4$ python 001/scripts/redis2mysql.py
+terminal5$ python 001/scripts/logs2ws.py
+
+# the load gets distributed over the 2 webservices
+# bug: nginx/access.log increases for each action, so logs2ws.py gets in an eternal loop
+# solved: skip /var/log/nginx dirpath in logs2ws.py
+
+#Tests:
+# * add more ws listening
+# * check graphite for cpu/mem usage
+
 
