@@ -359,5 +359,11 @@ terminal5$ python 001/scripts/logs2ws.py
 #Tests:
 # * add more ws listening
 # * check graphite for cpu/mem usage
+terminal6$ ./001/scripts/monitor.sh mypasswd    # queue and table sizes during test
+# * try without redis2mongo to see the queue increase, then start redis2mongo suddenly
+terminal7$ htop                                 #check cpu/mem during test
 
+--------
+- DONE -
+--------
 
